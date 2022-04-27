@@ -30,6 +30,7 @@ public class SimpleSceneBuilder extends BaseBuilder{
     While using this class, all the start positions/center positions should be similar with reference to each other.
     Drawback of not having standard start location is that objects such as walls, and floors have to be manually standardised by the user.
     Standard methoods are provided in quick.game.core.scene.SimpleSceneState. Further classes are also planned.*/
+
     static Node createSimpleBlock (String id, Material mat, Vector3f start, Vector3f end, Boolean useBullet){
         /*Simple methd to create a box and return a node containing the block.
         @param start, end - start and end points of the block.
@@ -61,8 +62,10 @@ public class SimpleSceneBuilder extends BaseBuilder{
     
     static Node createDirectionalLight(Vector3f Direction){
         DirectionalLight sun = new DirectionalLight();
-        sun.setLoca
-    sun.setDirection(Direction.normalizeLocal());
-    sun.setColor(ColorRGBA.White);
+        sun.setDirection(Direction.normalizeLocal());
+        sun.setColor(ColorRGBA.White);
+    }
+    static Node createDirectionalLight(){
+        createDirectionalLight(new Vector3f(0f, 0f, 0f));
     }
 }
