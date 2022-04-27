@@ -6,14 +6,17 @@
 package quick.game.core.builders.scene;
 
 import com.jme3.math.Vector3f;
-import quick.game.core.builders.BaseBuilder;
+import com.jme3.math.ColorRGBA;
 
+import quick.game.core.builders.BaseBuilder;
 import quick.game.math.Math;
 
 import com.jme3.scene.*;
 import com.jme3.scene.shape.Box;
 
 import com.jme3.material.Material;
+
+import com.jme3.light.DirectionalLight;
 
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -23,57 +26,43 @@ import com.jme3.bullet.util.CollisionShapeFactory;
  * @author Bhargav Balaji
  */
 public class SimpleSceneBuilder extends BaseBuilder{
-    static Node createSimpleFloor(String id, Material mat, Vector3f start, Vector3f end, Boolean useBullet){
-        start.y = -1f;
-        end.y = -3f;
+    /*A simple builder that creates objects in the scene with no standard start.
+    While using this class, all the start positions/center positions should be similar with reference to each other.
+    Drawback of not having standard start location is that objects such as walls, and floors have to be manually standardised by the user.
+    Standard methoods are provided in quick.game.core.scene.SimpleSceneState. Further classes are also planned.*/
+    static Node createSimpleBlock (String id, Material mat, Vector3f start, Vector3f end, Boolean useBullet){
+        /*Simple methd to create a box and return a node containing the block.
+        @param start, end - start and end points of the block.
+        @param id - unique string for the object.
+        @param mat - material for the Block
+        @param useBullet - whether to add a collision hitbox the node.
+        @returns - a Node containing the Block*/
         Vector3f center = start.clone();
         center.add(Math.average(start, end));
         Vector3f size = Math.subtract(end, start);
         
-        Node floor = new Node();
-        Box floorMesh = new Box(size.x, size.y, size.z);
-        Geometry floorGeo = new Geometry(id, floorMesh);
-        floorGeo.setMaterial(mat);
+        Node Block = new Node();
+        Box BlockMesh = new Box(size.x, size.y, size.z);
+        Geometry BlockGeo = new Geometry(id, BlockMesh);
+        BlockGeo.setMaterial(mat);
         
-        floor.attachChild(floorGeo);
+        Block.attachChild(BlockGeo);
         
         if (useBullet) {
-            CollisionShape floorShape = CollisionShapeFactory.createMeshShape(floor);
-            RigidBodyControl floorControl = new RigidBodyControl(floorShape, 0);
-            floor.addControl(floorControl);
-            return floor;
+            CollisionShape BlockShape = CollisionShapeFactory.createMeshShape(Block);
+            RigidBodyControl RigidBoxControl = new RigidBodyControl(BlockShape, 0);
+            Block.addControl(RigidBoxControl);
+            return Block;
         }
         else {
-            return floor;
+            return Block;
         }
     }
     
-    static Node createSimpleWall(String id, Material mat, Vector3f start, Vector3f end, Boolean useBullet){
-        start.y = 2f;
-        end.y = -1f;
-        Vector3f center = start.clone();
-        center.add(Math.average(start, end));
-        Vector3f size = Math.subtract(end, start);
-        
-        Node wall = new Node();
-        Box wallMesh = new Box(size.x, size.y, size.z);
-        Geometry wallGeo = new Geometry(id, wallMesh);
-        wallGeo.setMaterial(mat);
-        
-        wall.attachChild(wallGeo);
-        
-        if (useBullet) {
-            CollisionShape wallShape = CollisionShapeFactory.createMeshShape(wall);
-            RigidBodyControl wallControl = new RigidBodyControl(wallShape, 0);
-            wall.addControl(wallControl);
-            return wall;
-        }
-        else {
-            return wall;
-        }
+    static Node createDirectionalLight(Vector3f Direction){
+        DirectionalLight sun = new DirectionalLight();
+        sun.setLoca
+    sun.setDirection(Direction.normalizeLocal());
+    sun.setColor(ColorRGBA.White);
     }
-    
-    static void createLight(){}
-    
-    static void createRegion(){}
 }
