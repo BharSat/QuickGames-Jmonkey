@@ -82,4 +82,13 @@ public class XmlReaderState extends BaseAppState {
         sceneBuilderState.createRegion(start, end);
     }
 
+    void fence(String coords) {
+        String[] sepCoords = coords.split(",");
+        Vector3f start = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
+        int end = Integer.parseInt(sepCoords[2]);
+        SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
+        sceneBuilderState.createRegion(start, end);
+    
+    }
+
 }

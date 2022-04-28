@@ -113,6 +113,13 @@ public abstract class SimpleSceneState extends BaseAppState{
         this.walls++;
         this.items.add(id0);
     }
+
+    void createFence(Vector3f loc, Vector3f scale) {
+        String id0 = "wall" + this.walls.toString()
+        rootNode.attach(SimpleSceneBuilder.createCurvedWall(wallMat(), loc, scale, this.bullet));
+        this.walls++;
+        this.items.add(id0);
+    }
     
     void startLight(Vector3f Direction) {
         rootNode.attach(SimpleSceneBuilder.createDirectionalLight(Direction));

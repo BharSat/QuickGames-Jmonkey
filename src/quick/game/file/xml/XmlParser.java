@@ -50,10 +50,13 @@ class UserHandler extends DefaultHandler {
            reader.wall(attributes.getValue("coords"));
        }
        else if (qName.equals("light")) {
-           reader.light(reader.floor(attributes.getValue("direction")););
+           reader.light(attributes.getValue("direction"));
        }
        else if (qName.equals("region")) {
-           reader.region(reader.floor(attributes.getValue("coords")););
+           reader.region(attributes.getValue("coords"));
+       }
+       else if (qName.equals("fence")) {
+           reader.fence(attributes.getValue("locandscale"));
        }
    }
 
