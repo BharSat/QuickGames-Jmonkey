@@ -6,7 +6,30 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import quick.game.core.scene.XmlReaderState;
 
-public class XmlParser extends DefaultHandler {
+import java.io.File;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+public class XmlParser {
+
+   public static void parse(String location, XmlReaderState xmlReader) {
+
+      try {
+         File inputFile = new File(location);
+         SAXParserFactory SAXFactory = SAXParserFactory.newInstance();
+         SAXParser saxParser = SAXFactory.newSAXParser();
+         UserHandler userhandler = new UserHandler();
+         userhandler.init(xmlReader);
+         saxParser.parse(inputFile, userhandler);     
+      } catch (Exception e) {
+          System.out.println("Ignoring exception while parsing Xml:");
+          e.printStackTrace();
+      }
+   }   
+}
+
+
+class UserHandler extends DefaultHandler {
 
    boolean floor = false;
    boolean wall = false;
@@ -14,8 +37,8 @@ public class XmlParser extends DefaultHandler {
    boolean region = false;
    XmlReaderState reader;
 
-   public void init(@notNull XmlReaderState xml){
-       this.reader = xml;
+   public void init(@notNull XmlReaderState xmlReader){
+       this.reader = xmlReader;
    }
 
    @Override
@@ -27,7 +50,7 @@ public class XmlParser extends DefaultHandler {
            reader.wall(attributes.getValue("coords"));
        }
        else if (qName.equals("light")) {
-           reader.light(reader.floor(attributes.getValue("coords")););
+           reader.light(reader.floor(attributes.getValue("direction")););
        }
        else if (qName.equals("region")) {
            reader.region(reader.floor(attributes.getValue("coords")););
