@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package quick.game.core.builders.scene;
+package quick.game.core.builders;
 
 import com.jme3.math.Vector3f;
 import com.jme3.math.ColorRGBA;
@@ -67,5 +67,23 @@ public class SimpleSceneBuilder extends BaseBuilder{
     }
     static Node createDirectionalLight(){
         createDirectionalLight(new Vector3f(0f, 0f, 0f));
+    }
+
+    static Node createRoundWall(Material mat, Vector3f loc, Vector3f scale){
+        Spatial wall = assetManager.loadModel("Models/curvedWall.j3o");
+        wall.setMaterial(mat);
+        wallN = new Node();
+        wallN.attachChild(wall);
+        wallN.setLocalTranslation(loc);
+        wallN.setScale(scale);
+        if (useBullet) {
+            CollisionShape WallShape = CollisionShapeFactory.createMeshShape(WallN);
+            RigidBodyControl RigidWallControl = new RigidBodyControl(WallShape, 0);
+            Block.addControl(RigidWallControl);
+            return WallN;
+        }
+        else {
+            return WallN;
+        }
     }
 }
