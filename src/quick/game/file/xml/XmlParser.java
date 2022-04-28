@@ -56,7 +56,7 @@ class UserHandler extends DefaultHandler {
            reader.region(attributes.getValue("coords"));
        }
        else if (qName.equals("fence")) {
-           reader.fence(attributes.getValue("locandscale"));
+           reader.fence(attributes.getValue("loc"), attributes.getValue("scale"));
        }
    }
 
