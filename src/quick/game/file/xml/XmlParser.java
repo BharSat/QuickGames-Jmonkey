@@ -26,10 +26,10 @@ public class XmlParser extends DefaultHandler {
        else if (qName.equals("wall")) {
            reader.wall(attributes.getValue("coords"));
        }
-       else if (qName=="light") {
+       else if (qName.equals("light")) {
            reader.light(reader.floor(attributes.getValue("coords")););
        }
-       else if (qName=="region") {
+       else if (qName.equals("region")) {
            reader.region(reader.floor(attributes.getValue("coords")););
        }
    }
