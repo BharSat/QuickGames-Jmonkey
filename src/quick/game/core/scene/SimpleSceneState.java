@@ -87,10 +87,7 @@ public abstract class SimpleSceneState extends BaseAppState{
     //set the ground level of the appstate. This is used as a reference to create Items. raised floors and walls can be created by altering this value
     public void setGroundLevel(float ground) {this.Ground = ground;}
     
-    //creation methods. Mainly use methods from quick.game.core.builders.scene.SimpleSceneBuilder
-
-    void initBasicMaze() {}
-    
+    //creation methods. Mainly use methods from quick.game.core.builders.scene.SimpleSceneBuilder    
     void createFloor(Vector3f start, Vector3f end) {
         //create a flat floor and attach it to the rootNode
         //@param start - top left corner of the floor(Birds eye view). y coordinate is taken from the ground value.
@@ -117,16 +114,23 @@ public abstract class SimpleSceneState extends BaseAppState{
         this.items.add(id0);
     }
     
+    void startLight(Vector3f Direction) {
+        rootNode.attach(SimpleSceneBuilder.createDirectionalLight(Direction));
+        this.items.add("Light" + this.lights.toString());
+        this.lights++;
+    }
+
     void startLight() {
         rootNode.attach(SimpleSceneBuilder.createDirectionalLight());
         this.items.add("Light" + this.lights.toString());
         this.lights++;
     }
     
-    void createRegion(Vector3f start, Vector3f end) {
+    void createRegion(Vector3f start, Vector3f end, String id0) {
         region = SimpleSceneBuilder.createSimpleBlock(id0, regionMat, start, end, false);
         regionNode.attach(region);
         regions.add(region);
+        System.out.println("notImplemented yet.");
     }
     
     void deleteItem(){}
