@@ -1,4 +1,4 @@
-package quick.games.file.xml;
+package quick.game.file.xml;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
