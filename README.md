@@ -26,4 +26,7 @@ public class MyGame extends SimpleGame {
     }
 }
 ```
-You can also call the methods in https://github.com/BharSat/QuickGames-Jmonkey/blob/main/src/quick/game/core/scene/SimpleSceneState.java.
+You can continue with:
+ [SimpleSceneState class](https://github.com/BharSat/QuickGames-Jmonkey/blob/main/src/quick/game/core/scene/SimpleSceneState.java.)
+OR:
+[JMonkeyEngine methods](https://github.com/jMonkeyEngine/jmonkeyengine)
