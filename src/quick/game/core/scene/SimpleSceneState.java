@@ -15,20 +15,21 @@ import com.jme3.asset.AssetManager;
 
 import com.jme3.bullet.BulletAppState;
 
-import com.jme3.scene.Node;
+import com.jme3.scene.*;
 
 import com.jme3.math.Vector3f;
 import com.jme3.math.ColorRGBA;
 
 import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
 
-import quick.game.core.builders.scene.SimpleSceneBuilder;
+import quick.game.core.builders.SimpleSceneBuilder;
 
 /**
  *
  * @author Bhargav Balaji
  */
-public abstract class SimpleSceneState extends BaseAppState{
+public class SimpleSceneState extends BaseAppState{
     private SimpleApplication app;
     private AppStateManager stateManager;
     private Node rootNode;
@@ -40,25 +41,25 @@ public abstract class SimpleSceneState extends BaseAppState{
     private Integer walls = 0;
     private Integer lights = 0;
 
-    private List<String> items = new List();
-    private List<Spatial> regions = new List();
+    private List<String> items;
+    private List<Spatial> regions;
 
     private Node regionNode = new Node();
 
     private Material floorMat() {
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", assetManager.loadTexture("Textures/floor/Floor.png"));
         return mat;
     }
 
     private Material wallMat() {
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", assetManager.loadTexture("Textures/wall/Wall.png"));
         return mat;
     }
 
     private Material regionMat() {
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md")
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
     mat.setTexture("ColorMap", assetManager.loadTexture("Textures/floor/Floor.png"));
     mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
     return mat;
@@ -69,7 +70,7 @@ public abstract class SimpleSceneState extends BaseAppState{
         this.app = (SimpleApplication)arg0;
         this.stateManager = app.getStateManager();
         //check whether to use collision or not.
-        if (stateManager.getState(BulletAppState.class) is null) {this.bullet = false;}
+        if (stateManager.hasState(new BulletAppState())) {this.bullet = false;}
         else {this.bullet = true;}
         this.rootNode = this.app.getRootNode();
         this.assetManager = this.app.getAssetManager();
@@ -95,8 +96,8 @@ public abstract class SimpleSceneState extends BaseAppState{
         start.y = this.Ground;
         end.y = this.Ground - 1f;
 
-        String id0 = "floor" + this.floors.toString()
-        rootNode.attach(SimpleSceneBuilder.createSimpleBlock(id0, floorMat(), start, end, this.bullet));
+        String id0 = "floor" + this.floors.toString();
+        rootNode.attachChild(SimpleSceneBuilder.createSimpleBlock(id0, floorMat(), start, end, this.bullet));
         this.floors++;
         this.items.add(id0);
     }
@@ -108,34 +109,34 @@ public abstract class SimpleSceneState extends BaseAppState{
         start.y = this.Ground + height;
         end.y = this.Ground;
 
-        String id0 = "wall" + this.walls.toString()
-        rootNode.attach(SimpleSceneBuilder.createSimpleBlock(id0, wallMat(), start, end, this.bullet));
+        String id0 = "wall" + this.walls.toString();
+        rootNode.attachChild(SimpleSceneBuilder.createSimpleBlock(id0, wallMat(), start, end, this.bullet));
         this.walls++;
         this.items.add(id0);
     }
 
-    void createFence(Vector3f loc, Vector3f scale) {
-        String id0 = "wall" + this.walls.toString()
-        rootNode.attach(SimpleSceneBuilder.createCurvedWall(wallMat(), loc, scale, this.bullet));
+    void createFence(Vector3f loc, float scale) {
+        String id0 = "wall" + this.walls.toString();
+        rootNode.attachChild(SimpleSceneBuilder.createRoundWall(wallMat(), loc, scale, this.bullet, this.assetManager));
         this.walls++;
         this.items.add(id0);
     }
     
     void startLight(Vector3f Direction) {
-        rootNode.attach(SimpleSceneBuilder.createDirectionalLight(Direction));
+        rootNode.addLight(SimpleSceneBuilder.createDirectionalLight(Direction));
         this.items.add("Light" + this.lights.toString());
         this.lights++;
     }
 
     void startLight() {
-        rootNode.attach(SimpleSceneBuilder.createDirectionalLight());
+        rootNode.addLight(SimpleSceneBuilder.createDirectionalLight());
         this.items.add("Light" + this.lights.toString());
         this.lights++;
     }
     
     void createRegion(Vector3f start, Vector3f end, String id0) {
-        region = SimpleSceneBuilder.createSimpleBlock(id0, regionMat, start, end, false);
-        regionNode.attach(region);
+        Spatial region = SimpleSceneBuilder.createSimpleBlock(id0, regionMat(), start, end, false);
+        regionNode.attachChild(region);
         regions.add(region);
         System.out.println("notImplemented yet.");
     }
@@ -146,5 +147,7 @@ public abstract class SimpleSceneState extends BaseAppState{
     public void update(float tpf) {
         //TODO: implement logic to check if character is in region.
     }
+    
+    Boolean check() {return true;}
     
 }

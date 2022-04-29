@@ -1,7 +1,7 @@
 package quick.game.app;
 
 import com.jme3.app.SimpleApplication;
-import quick.game.core.SimpleSceneState;
+import quick.game.core.scene.SimpleSceneState;
 
 public class SimpleGame extends SimpleApplication {
 

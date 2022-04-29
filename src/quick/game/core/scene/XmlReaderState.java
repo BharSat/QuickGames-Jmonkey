@@ -34,8 +34,10 @@ public class XmlReaderState extends BaseAppState {
         this.inputManager = this.app.getInputManager();
         this.viewPort     = this.app.getViewPort();
         this.physics      = this.stateManager.getState(BulletAppState.class);
-        if (not stateManager.hasState(SimpleSceneState.class)) {
-            stateManager.attach(SimpleSceneState);
+        try {
+            this.stateManager.getState(SimpleSceneState.class, true);
+        } catch (IllegalArgumentException e) {
+            this.stateManager.attach(new SimpleSceneState());
         }
     }
 
@@ -64,7 +66,7 @@ public class XmlReaderState extends BaseAppState {
         Vector3f start = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
         Vector3f end = new Vector3f(Integer.parseInt(sepCoords[2]), 0, Integer.parseInt(sepCoords[3]));
         SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
-        sceneBuilderState.createWall(start, end);
+        sceneBuilderState.createWall(start, end, 3f);
     }
 
     void light(String coords){
@@ -74,20 +76,20 @@ public class XmlReaderState extends BaseAppState {
         sceneBuilderState.startLight(direction);
     }
 
-    void region(String coords){
+    void region(String coords, String id0){
         String[] sepCoords = coords.split(",");
         Vector3f start = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
         Vector3f end = new Vector3f(Integer.parseInt(sepCoords[2]), 0, Integer.parseInt(sepCoords[3]));
         SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
-        sceneBuilderState.createRegion(start, end);
+        sceneBuilderState.createRegion(start, end, id0);
     }
 
     void fence(String loc, String scale) {
-        String[] sepCoords = coords.split(",");
-        Vector3f start = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
-        int end = Integer.parseInt(scale);
+        String[] sepCoords = loc.split(",");
+        Vector3f loc_ = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
+        int  = Integer.parseInt(scale);
         SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
-        sceneBuilderState.createRegion(start, end);
+        sceneBuilderState.createFence(loc_, scale);
     
     }
 

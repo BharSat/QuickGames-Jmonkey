@@ -8,8 +8,8 @@ package quick.game.core.builders;
 import com.jme3.math.Vector3f;
 import com.jme3.math.ColorRGBA;
 
-import quick.game.core.builders.BaseBuilder;
 import quick.game.math.Math;
+import com.jme3.asset.AssetManager;
 
 import com.jme3.scene.*;
 import com.jme3.scene.shape.Box;
@@ -26,12 +26,13 @@ import com.jme3.bullet.util.CollisionShapeFactory;
  * @author Bhargav Balaji
  */
 public class SimpleSceneBuilder extends BaseBuilder{
+
     /*A simple builder that creates objects in the scene with no standard start.
     While using this class, all the start positions/center positions should be similar with reference to each other.
     Drawback of not having standard start location is that objects such as walls, and floors have to be manually standardised by the user.
     Standard methoods are provided in quick.game.core.scene.SimpleSceneState. Further classes are also planned.*/
 
-    static Node createSimpleBlock (String id, Material mat, Vector3f start, Vector3f end, Boolean useBullet){
+    public static Node createSimpleBlock (String id, Material mat, Vector3f start, Vector3f end, Boolean useBullet){
         /*Simple methd to create a box and return a node containing the block.
         @param start, end - start and end points of the block.
         @param id - unique string for the object.
@@ -60,30 +61,32 @@ public class SimpleSceneBuilder extends BaseBuilder{
         }
     }
     
-    static Node createDirectionalLight(Vector3f Direction){
+    public static DirectionalLight createDirectionalLight(Vector3f Direction){
         DirectionalLight sun = new DirectionalLight();
         sun.setDirection(Direction.normalizeLocal());
         sun.setColor(ColorRGBA.White);
+        return sun;
     }
-    static Node createDirectionalLight(){
-        createDirectionalLight(new Vector3f(0f, 0f, 0f));
+    
+    public static DirectionalLight createDirectionalLight(){
+        return createDirectionalLight(new Vector3f(0f, 0f, 0f));
     }
 
-    static Node createRoundWall(Material mat, Vector3f loc, Vector3f scale){
+    public static Node createRoundWall(Material mat, Vector3f loc, float scale, Boolean useBullet, AssetManager assetManager){
         Spatial wall = assetManager.loadModel("Models/curvedWall.j3o");
         wall.setMaterial(mat);
-        wallN = new Node();
+        Node wallN = new Node();
         wallN.attachChild(wall);
         wallN.setLocalTranslation(loc);
-        wallN.setScale(scale);
+        wallN.scale(scale);
         if (useBullet) {
-            CollisionShape WallShape = CollisionShapeFactory.createMeshShape(WallN);
+            CollisionShape WallShape = CollisionShapeFactory.createMeshShape(wallN);
             RigidBodyControl RigidWallControl = new RigidBodyControl(WallShape, 0);
-            Block.addControl(RigidWallControl);
-            return WallN;
+            wallN.addControl(RigidWallControl);
+            return wallN;
         }
         else {
-            return WallN;
+            return wallN;
         }
     }
 }
