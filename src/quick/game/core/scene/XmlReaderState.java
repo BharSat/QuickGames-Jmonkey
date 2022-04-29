@@ -53,7 +53,7 @@ public class XmlReaderState extends BaseAppState {
     @Override
     public void update(float tpf) {}
 
-    void floor(String coords){
+    public void floor(String coords){
         String[] sepCoords = coords.split(",");
         Vector3f start = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
         Vector3f end = new Vector3f(Integer.parseInt(sepCoords[2]), 0, Integer.parseInt(sepCoords[3]));
@@ -61,7 +61,7 @@ public class XmlReaderState extends BaseAppState {
         sceneBuilderState.createFloor(start, end);
     }
 
-    void wall(String coords){
+    public void wall(String coords){
         String[] sepCoords = coords.split(",");
         Vector3f start = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
         Vector3f end = new Vector3f(Integer.parseInt(sepCoords[2]), 0, Integer.parseInt(sepCoords[3]));
@@ -69,14 +69,14 @@ public class XmlReaderState extends BaseAppState {
         sceneBuilderState.createWall(start, end, 3f);
     }
 
-    void light(String coords){
+    public void light(String coords){
         String[] sepCoords = coords.split(",");
         Vector3f direction = new Vector3f(Integer.parseInt(sepCoords[0]), Integer.parseInt(sepCoords[1]), Integer.parseInt(sepCoords[2]));
         SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
         sceneBuilderState.startLight(direction);
     }
 
-    void region(String coords, String id0){
+    public void region(String coords, String id0){
         String[] sepCoords = coords.split(",");
         Vector3f start = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
         Vector3f end = new Vector3f(Integer.parseInt(sepCoords[2]), 0, Integer.parseInt(sepCoords[3]));
@@ -84,12 +84,12 @@ public class XmlReaderState extends BaseAppState {
         sceneBuilderState.createRegion(start, end, id0);
     }
 
-    void fence(String loc, String scale) {
+    public void fence(String loc, String scale) {
         String[] sepCoords = loc.split(",");
         Vector3f loc_ = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
-        int  = Integer.parseInt(scale);
+        int scaleInt = Integer.parseInt(scale);
         SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
-        sceneBuilderState.createFence(loc_, scale);
+        sceneBuilderState.createFence(loc_, scaleInt);
     
     }
 

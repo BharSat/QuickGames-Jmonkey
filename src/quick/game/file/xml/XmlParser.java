@@ -37,7 +37,7 @@ class UserHandler extends DefaultHandler {
    boolean region = false;
    XmlReaderState reader;
 
-   public void init(@notNull XmlReaderState xmlReader){
+   public void init(XmlReaderState xmlReader){
        this.reader = xmlReader;
    }
 
@@ -53,7 +53,7 @@ class UserHandler extends DefaultHandler {
            reader.light(attributes.getValue("direction"));
        }
        else if (qName.equals("region")) {
-           reader.region(attributes.getValue("coords"));
+           reader.region(attributes.getValue("loc"), attributes.getValue("name"));
        }
        else if (qName.equals("fence")) {
            reader.fence(attributes.getValue("loc"), attributes.getValue("scale"));
