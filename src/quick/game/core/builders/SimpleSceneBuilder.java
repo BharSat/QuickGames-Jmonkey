@@ -27,7 +27,7 @@ import com.jme3.bullet.util.CollisionShapeFactory;
  */
 public class SimpleSceneBuilder extends BaseBuilder{
 
-    /*A simple builder that creates objects in the scene with no standard start.
+    /*A builder that creates objects in the scene with no standard start.
     While using this class, all the start positions/center positions should be similar with reference to each other.
     Drawback of not having standard start location is that objects such as walls, and floors have to be manually standardised by the user.
     Standard methoods are provided in quick.game.core.scene.SimpleSceneState. Further classes are also planned.*/
