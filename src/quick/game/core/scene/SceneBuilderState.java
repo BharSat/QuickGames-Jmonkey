@@ -101,10 +101,10 @@ public class SceneBuilderState extends BaseAppState{
         rootNode.attachChild(toReturn);
         this.floors++;
         this.items.add(id0);
-        return toReturn
+        return toReturn;
     }
 
-    void createWall(Vector3f start, Vector3f end, float height) {
+    public Node createWall(Vector3f start, Vector3f end, float height) {
         //create a flat wall and attach it to the rootNode
         //@param start - top left corner of the floor(Birds eye view). y coordinate is taken from the ground value(added to wall height).
         //@param end - Bottom right corner of the floor y coordinate is taken from the ground value.
@@ -112,7 +112,8 @@ public class SceneBuilderState extends BaseAppState{
         end.y = this.Ground;
 
         String id0 = "wall" + this.walls.toString();
-        rootNode.attachChild(SimpleSceneBuilder.createSimpleBlock(id0, wallMat(), start, end, this.bullet));
+        Node toReturn = SimpleSceneBuilder.createSimpleBlock(id0, wallMat(), start, end, this.bullet);
+        rootNode.attachChild(toReturn);
         this.walls++;
         this.items.add(id0);
     }
