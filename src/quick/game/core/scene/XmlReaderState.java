@@ -35,9 +35,9 @@ public class XmlReaderState extends BaseAppState {
         this.viewPort     = this.app.getViewPort();
         this.physics      = this.stateManager.getState(BulletAppState.class);
         try {
-            this.stateManager.getState(SimpleSceneState.class, true);
+            this.stateManager.getState(SceneBuilderState.class, true);
         } catch (IllegalArgumentException e) {
-            this.stateManager.attach(new SimpleSceneState());
+            this.stateManager.attach(new SceneBuilderState());
         }
     }
 
@@ -57,7 +57,7 @@ public class XmlReaderState extends BaseAppState {
         String[] sepCoords = coords.split(",");
         Vector3f start = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
         Vector3f end = new Vector3f(Integer.parseInt(sepCoords[2]), 0, Integer.parseInt(sepCoords[3]));
-        SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
+        SceneBuilderState sceneBuilderState = (SceneBuilderState)stateManager.getState(SceneBuilderState.class);
         sceneBuilderState.createFloor(start, end);
     }
 
@@ -65,14 +65,14 @@ public class XmlReaderState extends BaseAppState {
         String[] sepCoords = coords.split(",");
         Vector3f start = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
         Vector3f end = new Vector3f(Integer.parseInt(sepCoords[2]), 0, Integer.parseInt(sepCoords[3]));
-        SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
+        SceneBuilderState sceneBuilderState = (SceneBuilderState)stateManager.getState(SceneBuilderState.class);
         sceneBuilderState.createWall(start, end, 3f);
     }
 
     public void light(String coords){
         String[] sepCoords = coords.split(",");
         Vector3f direction = new Vector3f(Integer.parseInt(sepCoords[0]), Integer.parseInt(sepCoords[1]), Integer.parseInt(sepCoords[2]));
-        SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
+        SceneBuilderState sceneBuilderState = (SceneBuilderState)stateManager.getState(SceneBuilderState.class);
         sceneBuilderState.startLight(direction);
     }
 
@@ -80,7 +80,7 @@ public class XmlReaderState extends BaseAppState {
         String[] sepCoords = coords.split(",");
         Vector3f start = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
         Vector3f end = new Vector3f(Integer.parseInt(sepCoords[2]), 0, Integer.parseInt(sepCoords[3]));
-        SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
+        SceneBuilderState sceneBuilderState = (SceneBuilderState)stateManager.getState(SceneBuilderState.class);
         sceneBuilderState.createRegion(start, end, id0);
     }
 
@@ -88,7 +88,7 @@ public class XmlReaderState extends BaseAppState {
         String[] sepCoords = loc.split(",");
         Vector3f loc_ = new Vector3f(Integer.parseInt(sepCoords[0]), 0, Integer.parseInt(sepCoords[1]));
         int scaleInt = Integer.parseInt(scale);
-        SimpleSceneState sceneBuilderState = (SimpleSceneState)stateManager.getState(SimpleSceneState.class);
+        SceneBuilderState sceneBuilderState = (SceneBuilderState)stateManager.getState(SceneBuilderState.class);
         sceneBuilderState.createFence(loc_, scaleInt);
     
     }
