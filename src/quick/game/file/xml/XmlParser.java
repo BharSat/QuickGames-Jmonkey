@@ -10,6 +10,8 @@ import java.io.File;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import com.jme3.scene.Node;
+
 public class XmlParser {
 
    public static void parse(String location, XmlReaderState xmlReader) {
@@ -32,9 +34,6 @@ public class XmlParser {
 class UserHandler extends DefaultHandler {
 
    boolean floor = false;
-   boolean wall = false;
-   boolean light = false;
-   boolean region = false;
    XmlReaderState reader;
 
    public void init(XmlReaderState xmlReader){
@@ -43,6 +42,7 @@ class UserHandler extends DefaultHandler {
 
    @Override
    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+       qName = qName.toLowerCase();
        if (qName.equals("floor")) {
            reader.floor(attributes.getValue("coords"));
        }
@@ -56,6 +56,9 @@ class UserHandler extends DefaultHandler {
            reader.region(attributes.getValue("loc"), attributes.getValue("name"));
        }
        else if (qName.equals("fence")) {
+           reader.fence(attributes.getValue("loc"), attributes.getValue("scale"));
+       }
+       else if (qName.equals("node")) {
            reader.fence(attributes.getValue("loc"), attributes.getValue("scale"));
        }
    }

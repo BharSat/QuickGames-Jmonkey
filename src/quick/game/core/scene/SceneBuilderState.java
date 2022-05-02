@@ -116,16 +116,19 @@ public class SceneBuilderState extends BaseAppState{
         rootNode.attachChild(toReturn);
         this.walls++;
         this.items.add(id0);
+        return toReturn;
     }
 
-    void createFence(Vector3f loc, float scale) {
+    public Node createFence(Vector3f loc, float scale) {
         String id0 = "wall" + this.walls.toString();
-        rootNode.attachChild(SimpleSceneBuilder.createRoundWall(wallMat(), loc, scale, this.bullet, this.assetManager));
+        Node toReturn = SimpleSceneBuilder.createRoundWall(wallMat(), loc, scale, this.bullet, this.assetManager);
+        rootNode.attachChild(toReturn);
         this.walls++;
         this.items.add(id0);
+        return toReturn;
     }
     
-    void startLight(Vector3f Direction) {
+    public void startLight(Vector3f Direction) {
         rootNode.addLight(SimpleSceneBuilder.createDirectionalLight(Direction));
         this.items.add("Light" + this.lights.toString());
         this.lights++;

@@ -12,6 +12,7 @@ import com.jme3.scene.Node;
 
 import com.jme3.math.Vector3f;
 import quick.game.core.scene.*;
+import quick.game.file.xml.XmlParser;
 
 public class QuickGameState extends BaseAppState {
     /*AppState to aid quick.game.file.xml.XmlParser in xml parsing.
@@ -26,7 +27,7 @@ public class QuickGameState extends BaseAppState {
     private ViewPort          viewPort;
     private BulletAppState    physics;
     private SceneBuilderState sceneState;
-    private XmlReaderState XmlParser;
+    private XmlReaderState xmlParser;
     
     float ground = -1f;
     
@@ -43,8 +44,8 @@ public class QuickGameState extends BaseAppState {
         this.sceneState = new SceneBuilderState();
         this.stateManager.attach(this.sceneState);
         
-        this.XmlParser = new XmlReaderState();
-        this.stateManager.attach(this.XmlParser);
+        this.xmlParser = new XmlReaderState();
+        this.stateManager.attach(this.xmlParser);
     }
 
     @Override
@@ -59,6 +60,16 @@ public class QuickGameState extends BaseAppState {
     @Override
     public void update(float tpf) {}
     
-    public Node
+    public Node createFloor(Vector3f start, Vector3f end) {return this.sceneState.createFloor(start, end);}
+    
+    public Node createWall(Vector3f start, Vector3f end, float height) {return this.sceneState.createWall(start, end, height);}
+    
+    public Node createFence(Vector3f start, float height) {return this.sceneState.createFence(start, height);}
+    
+    public void startSun(Vector3f Direction) {this.sceneState.startLight(Direction);}
+    
+    public void parse(String path_to_file) {
+        XmlParser.parse(path_to_file, xmlParser);
+    }
 
 }
