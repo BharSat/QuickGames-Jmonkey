@@ -27,7 +27,7 @@ public class XmlReaderState extends BaseAppState {
     
     @Override
     protected void initialize(Application appB) {
-        this.app = (SimpleApplication) app;
+        this.app = (SimpleApplication) appB;
         this.rootNode     = this.app.getRootNode();
         this.assetManager = this.app.getAssetManager();
         this.stateManager = this.app.getStateManager();
