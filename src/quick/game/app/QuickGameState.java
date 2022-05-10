@@ -42,12 +42,17 @@ public class QuickGameState extends BaseAppState {
         this.inputManager = this.app.getInputManager();
         this.viewPort     = this.app.getViewPort();
         this.physics      = this.stateManager.getState(BulletAppState.class);
+        System.out.println("step 1");
         
         this.sceneState = new SceneBuilderState();
         this.stateManager.attach(this.sceneState);
         
+        System.out.println("Step 2");
+        
         this.xmlParser = new XmlReaderState();
         this.stateManager.attach(this.xmlParser);
+        
+        System.out.println("Step 3");
         
         this.playerState = new PlayerAppState();
         this.stateManager.attach(this.playerState);
