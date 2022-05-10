@@ -7,12 +7,12 @@ import com.jme3.app.state.BaseAppState;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.input.InputManager;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
-
-import com.jme3.math.Vector3f;
 import quick.game.core.scene.*;
 import quick.game.file.xml.XmlParser;
+import quick.game.core.scene.PlayerAppState;
 
 public class QuickGameState extends BaseAppState {
     /*AppState to aid quick.game.file.xml.XmlParser in xml parsing.
@@ -26,10 +26,11 @@ public class QuickGameState extends BaseAppState {
     private InputManager      inputManager;
     private ViewPort          viewPort;
     private BulletAppState    physics;
-    private SceneBuilderState sceneState;
-    private XmlReaderState xmlParser;
+    public SceneBuilderState sceneState;
+    public XmlReaderState xmlParser;
+    public PlayerAppState playerState;
     
-    float ground = -1f;
+    private float ground = -1f;
     public Boolean initialized = false;
     
     @Override
@@ -47,7 +48,11 @@ public class QuickGameState extends BaseAppState {
         
         this.xmlParser = new XmlReaderState();
         this.stateManager.attach(this.xmlParser);
-        initialized = true;
+        
+        this.playerState = new PlayerAppState();
+        this.stateManager.attach(this.playerState);
+        
+        this.initialized = true;
     }
 
     @Override
