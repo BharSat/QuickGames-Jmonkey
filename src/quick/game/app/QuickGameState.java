@@ -30,6 +30,7 @@ public class QuickGameState extends BaseAppState {
     private XmlReaderState xmlParser;
     
     float ground = -1f;
+    public Boolean initialized = false;
     
     @Override
     protected void initialize(Application appB) {
@@ -46,6 +47,7 @@ public class QuickGameState extends BaseAppState {
         
         this.xmlParser = new XmlReaderState();
         this.stateManager.attach(this.xmlParser);
+        initialized = true;
     }
 
     @Override
